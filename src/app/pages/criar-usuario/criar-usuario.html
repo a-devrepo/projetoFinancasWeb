@@ -8,6 +8,14 @@
     <h2 class="text-center"><strong>Finanças Web</strong></h2>
     <p class="text-center">Crie sua conta de usuário.</p>
 
+    <div class="text-center text-success mb-2">
+      <strong>{{ mensagemSucesso() }}</strong>
+    </div>
+
+    <div class="text-center text-danger mb-2">
+      <strong>{{ mensagemErro() }}</strong>
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="mb-3">
@@ -20,6 +28,9 @@
           placeholder="Digite seu nome"
           required
         />
+        <div class="text-danger" *ngIf="form.get('nome')?.touched && form.get('nome')?.invalid">
+          Por favor, informe o <strong>nome</strong> com pelo menos 8 caracteres.
+        </div>
       </div>
 
       <div class="mb-3">
@@ -32,6 +43,9 @@
           placeholder="Digite seu e-mail"
           required
         />
+        <div class="text-danger" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          Por favor, informe um <strong>email</strong> válido.
+        </div>
       </div>
 
       <div class="mb-3">
@@ -44,6 +58,9 @@
           placeholder="Digite sua senha"
           required
         />
+        <div class="text-danger" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
+          Por favor, informe a <strong>senha</strong> com letras maiúsculas, minúsculas símbolos e no mínimo 8 caracteres.
+        </div>
       </div>
 
       <div class="mb-3">
@@ -56,9 +73,12 @@
           placeholder="Confirme sua senha"
           required
         />
+        <div class="text-danger" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
+          Por favor, informe a <strong>senha</strong> com letras maiúsculas, minúsculas símbolos e no mínimo 8 caracteres.
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary w-100 mt-3">Realizar Cadastro</button>
+      <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="form.invalid">Realizar Cadastro</button>
 
       <div class="text-center mt-3">
         <a routerLink="/autenticar-usuario">Já possui conta? Acesse aqui</a>
