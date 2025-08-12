@@ -3,6 +3,7 @@ import { AutenticarUsuario } from './pages/autenticar-usuario/autenticar-usuario
 import { CriarUsuario } from './pages/criar-usuario/criar-usuario';
 import { ConsultarFinancas } from './pages/consultar-financas/consultar-financas';
 import { CadastrarCategorias } from './pages/cadastrar-categorias/cadastrar-categorias';
+import { CadastrarFinancas } from './pages/cadastrar-financas/cadastrar-financas';
 
 export const routes: Routes = [
     {
@@ -16,6 +17,9 @@ export const routes: Routes = [
     },
     {
         path: 'cadastrar-categorias', component: CadastrarCategorias
+    },
+    {
+        path: 'cadastrar-financas', component: CadastrarFinancas    
     },
     {
         path: '', pathMatch: 'full', component: AutenticarUsuario
