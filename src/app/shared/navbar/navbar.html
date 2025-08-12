@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+  <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/consultar-financas">
+          <strong>Controle de finanças</strong>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" routerLink="/cadastrar-categorias">
+                      Cadastrar categorias
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" routerLink="/cadastrar-financas">
+                      Cadastrar finanças
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" routerLink="/consultar-financas">
+                      Consultar finanças
+                  </a>
+              </li>
+          </ul>
+
+          <div class="d-flex align-items-center">
+              <div class="text-white me-3 text-end">
+                  <div><strong>{{ nomeUsuario() }}</strong></div>
+                  <div style="font-size: 0.875rem;">{{ emailUsuario() }}</div>
+              </div>
+              <button class="btn btn-outline-light btn-sm ms-3 me-3" (click)="logout()">
+                  Sair do sistema
+              </button>
+          </div>
+      </div>
+  </div>
+</nav>
