@@ -27,8 +27,8 @@
                             @for(movimentacao of movimentacoes ; track movimentacao.id){
                                 <tr>
                                     <td>{{movimentacao.nome}}</td>
-                                    <td>{{movimentacao.data}}</td>
-                                    <td>{{movimentacao.valor}}</td>
+                                    <td>{{movimentacao.data | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{movimentacao.valor | currency:'BRL':'symbol':'1.2-2'}}</td>
                                     <td>{{movimentacao.tipo}}</td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-outline-primary me-1"
