@@ -4,6 +4,7 @@ import { CriarUsuario } from './pages/criar-usuario/criar-usuario';
 import { ConsultarFinancas } from './pages/consultar-financas/consultar-financas';
 import { CadastrarCategorias } from './pages/cadastrar-categorias/cadastrar-categorias';
 import { CadastrarFinancas } from './pages/cadastrar-financas/cadastrar-financas';
+import { EditarFinancas } from './pages/editar-financas/editar-financas';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,9 @@ export const routes: Routes = [
     },
     {
         path: 'cadastrar-financas', component: CadastrarFinancas    
+    },
+    {
+        path: 'editar-financas/:id', component: EditarFinancas    
     },
     {
         path: '', pathMatch: 'full', component: AutenticarUsuario

@@ -31,7 +31,8 @@
                                     <td>{{movimentacao.valor}}</td>
                                     <td>{{movimentacao.tipo}}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-outline-primary me-1">
+                                        <button class="btn btn-sm btn-outline-primary me-1"
+                                        [routerLink]="['/editar-financas', movimentacao.id]">
                                             Editar
                                         </button>
                                         <button class="btn btn-sm btn-outline-danger">

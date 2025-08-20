@@ -3,13 +3,15 @@ import { Navbar } from '../../shared/navbar/navbar';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-consultar-financas',
   imports: [
     Navbar,
-    CommonModule
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './consultar-financas.html',
   styleUrl: './consultar-financas.css'
