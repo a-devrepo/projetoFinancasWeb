@@ -1,79 +1,82 @@
 <app-navbar></app-navbar>
-<div class="container mt-4">
-    
-    <h3 class="mb-4">Cadastro de Movimentação Financeira</h3>
+<div class="container mt-3">
+    <div class="card shadow">
+        <div class="card-body">
+            <h3 class="mb-4">Cadastro de Movimentação Financeira</h3>
 
-    <div class="alert alert-success" *ngIf="mensagemSucesso()">
-        <strong>{{ mensagemSucesso() }}</strong>
-    </div>
-
-    <div class="alert alert-danger" *ngIf="mensagemErro()">
-        <strong>{{ mensagemErro() }}</strong>
-    </div>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" formControlName="nome" class="form-control" placeholder="Digite o nome da movimentação" />
-            <div class="text-danger" *ngIf="form.get('nome')?.touched">
-                <span *ngIf="form.get('nome')?.hasError('required')">
-                    Por favor, preencha o nome da movimentação.
-                </span>
-                <span *ngIf="form.get('nome')?.hasError('minlength')">
-                    O nome deve ter no mínimo 8 caracteres.
-                </span>
-                <span *ngIf="form.get('nome')?.hasError('maxlength')">
-                    O nome deve ter no máximo 100 caracteres.
-                </span>
+            <div class="alert alert-success" *ngIf="mensagemSucesso()">
+                <strong>{{ mensagemSucesso() }}</strong>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="data" class="form-label">Data</label>
-            <input type="date" formControlName="data" class="form-control" />
-            <div class="text-danger" *ngIf="form.get('data')?.touched">
-                <span *ngIf="form.get('data')?.hasError('required')">
-                    Por favor, preencha a data.
-                </span>
+        
+            <div class="alert alert-danger" *ngIf="mensagemErro()">
+                <strong>{{ mensagemErro() }}</strong>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="valor" class="form-label">Valor</label>
-            <input type="number" formControlName="valor" class="form-control" />
-            <div class="text-danger" *ngIf="form.get('valor')?.touched">
-                <span *ngIf="form.get('valor')?.hasError('required')">
-                    Por favor, preencha o valor.
-                </span>
-                <span *ngIf="form.get('valor')?.hasError('min')">
-                    O valor deve ser mais que 0.
-                </span>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="tipo" class="form-label">Tipo</label>
-            <select class="form-select" formControlName="tipo">
-                <option value="">Selecione</option>
-                <option value="ENTRADA">Entrada</option>
-                <option value="SAIDA">Saída</option>
-            </select>
-            <div class="text-danger" *ngIf="form.get('tipo')?.touched">
-                <span *ngIf="form.get('tipo')?.hasError('required')">
-                    Por favor, escolha o tipo.
-                </span>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="categoriaId" class="form-label">Categoria</label>
-            <select formControlName="categoriaId" class="form-select">
-                <option value="">Selecione uma categoria</option>
-                @for(categoria of categorias; track categoria.id){
-                    <option [value]="categoria.id">
-                        {{categoria.nome}}
-                    </option>
-                }
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-            Realizar Cadastro
-        </button>
-    </form>
+        
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" formControlName="nome" class="form-control" placeholder="Digite o nome da movimentação" />
+                    <div class="text-danger" *ngIf="form.get('nome')?.touched">
+                        <span *ngIf="form.get('nome')?.hasError('required')">
+                            Por favor, preencha o nome da movimentação.
+                        </span>
+                        <span *ngIf="form.get('nome')?.hasError('minlength')">
+                            O nome deve ter no mínimo 8 caracteres.
+                        </span>
+                        <span *ngIf="form.get('nome')?.hasError('maxlength')">
+                            O nome deve ter no máximo 100 caracteres.
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="data" class="form-label">Data</label>
+                    <input type="date" formControlName="data" class="form-control" />
+                    <div class="text-danger" *ngIf="form.get('data')?.touched">
+                        <span *ngIf="form.get('data')?.hasError('required')">
+                            Por favor, preencha a data.
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="valor" class="form-label">Valor</label>
+                    <input type="number" formControlName="valor" class="form-control" />
+                    <div class="text-danger" *ngIf="form.get('valor')?.touched">
+                        <span *ngIf="form.get('valor')?.hasError('required')">
+                            Por favor, preencha o valor.
+                        </span>
+                        <span *ngIf="form.get('valor')?.hasError('min')">
+                            O valor deve ser mais que 0.
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <select class="form-select" formControlName="tipo">
+                        <option value="">Selecione</option>
+                        <option value="ENTRADA">Entrada</option>
+                        <option value="SAIDA">Saída</option>
+                    </select>
+                    <div class="text-danger" *ngIf="form.get('tipo')?.touched">
+                        <span *ngIf="form.get('tipo')?.hasError('required')">
+                            Por favor, escolha o tipo.
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="categoriaId" class="form-label">Categoria</label>
+                    <select formControlName="categoriaId" class="form-select">
+                        <option value="">Selecione uma categoria</option>
+                        @for(categoria of categorias; track categoria.id){
+                            <option [value]="categoria.id">
+                                {{categoria.nome}}
+                            </option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+                    Realizar Cadastro
+                </button>
+            </form>
+        </div>    
+    </div>    
 </div>
