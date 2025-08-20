@@ -2,6 +2,14 @@
 <div class="container mt-3">
 
     <h3 class="mb-4">Consulta de Movimentações Financeiras</h3>
+    
+    <div class="alert alert-success" *ngIf="mensagemSucesso()">
+        <strong>{{ mensagemSucesso() }}</strong>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="mensagemErro()">
+        <strong>{{ mensagemErro() }}</strong>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover align-middle shadow-sm">
@@ -11,26 +19,26 @@
                     <th>Data</th>
                     <th>Valor</th>
                     <th>Tipo</th>
-                    <th>Categoria</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-center">
-                        <button class="btn btn-sm btn-outline-primary me-1">
-                            Editar
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                            Excluir
-                        </button>
-                    </td>
-                </tr>
+                @for(movimentacao of movimentacoes ; track movimentacao.id){
+                    <tr>
+                        <td>{{movimentacao.nome}}</td>
+                        <td>{{movimentacao.data}}</td>
+                        <td>{{movimentacao.valor}}</td>
+                        <td>{{movimentacao.tipo}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                                Editar
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                                Excluir
+                            </button>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
