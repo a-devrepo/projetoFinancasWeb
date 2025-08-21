@@ -32,8 +32,12 @@ Permite atualizar dados de movimentações já cadastradas.
 Formulário para criação e gerenciamento de categorias utilizadas nas movimentações financeiras.
 
 Este projeto se comunica com a API Spring Boot para autenticação, cadastro de usuários, movimentações e categorias.  
-Repositório da API:  
+
+Para gerenciamento de usuários:  
 [https://github.com/a-devrepo/projetoUsuariosApi](https://github.com/a-devrepo/projetoUsuariosApi)
+
+Para o gerenciamento das movimentações financeiras:
+[https://github.com/a-devrepo/projetoFinancasApi](https://github.com/a-devrepo/projetoFinancasApi)
 
 ## Como executar o projeto
 
