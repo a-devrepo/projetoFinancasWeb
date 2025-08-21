@@ -40,7 +40,7 @@ Para gerenciamento de usuários:
 
 Para o gerenciamento das movimentações financeiras:
 
-[https://github.com/a-devrepo/projetoUsuariosApi](https://github.com/a-devrepo/projetoFinancasApi)
+[https://github.com/a-devrepo/projetoFinancasApi](https://github.com/a-devrepo/projetoFinancasApi)
 
 ## Como executar o projeto
 
