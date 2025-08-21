@@ -1,7 +1,51 @@
 <app-navbar></app-navbar>
-<div class="container mt-3">
 
+<div class="container mt-3">
     <h3 class="mb-4">Consulta de Movimentações Financeiras</h3>
+
+    <div class="alert alert-success" *ngIf="mensagemSucesso()">
+        <strong>{{ mensagemSucesso() }}</strong>
+    </div>
+    <div class="alert alert-danger" *ngIf="mensagemErro()">
+        <strong>{{ mensagemErro() }}</strong>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card border-success bg-success shadow-sm">
+                <div class="card-body text-white">
+                    <h6 class="card-title">Total de ENTRADAS</h6>
+                    <p class="card-text fs-5">
+                        <strong>{{ totalEntradas() | currency:'BRL' }}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger bg-danger shadow-sm">
+                <div class="card-body text-white">
+                    <h6 class="card-title">Total de SAÍDAS</h6>
+                    <p class="card-text fs-5">
+                        <strong>{{ totalSaidas() | currency:'BRL' }}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary bg-primary shadow-sm">
+                <div class="card-body text-white">
+                    <h6 class="card-title">Saldo</h6>
+                    <p class="card-text fs-5">
+                        <strong>
+                            {{ saldo() | currency:'BRL' }}
+                            <span *ngIf="saldo() >= 0">(Positivo)</span>
+                            <span *ngIf="saldo() < 0">(Negativo)</span>
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover align-middle shadow-sm">
@@ -11,27 +55,63 @@
                     <th>Data</th>
                     <th>Valor</th>
                     <th>Tipo</th>
-                    <th>Categoria</th>
                     <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr *ngFor="let movimentacao of movimentacoes()">
+                    <td>{{ movimentacao.nome | uppercase }}</td>
+                    <td>{{ movimentacao.data | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ movimentacao.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
+                    <td>
+                        <span class="badge bg-{{ movimentacao.tipo === 'ENTRADA' ? 'success' : 'danger' }}">
+                            {{ movimentacao.tipo | uppercase }}
+                        </span>
+                    </td>
                     <td class="text-center">
-                        <button class="btn btn-sm btn-outline-primary me-1">
+                        <button class="btn btn-sm btn-outline-primary me-1"
+                                [routerLink]="['/editar-financas', movimentacao.id]">
                             Editar
                         </button>
-                        <button class="btn btn-sm btn-outline-danger">
+                        <button class="btn btn-sm btn-outline-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmarExclusaoModal"
+                                (click)="selecionarMovimentacao(movimentacao)">
                             Excluir
                         </button>
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="fw-bold">
+                        Total de registros: {{ movimentacoes().length }}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" aria-labelledby="confirmarExclusaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja excluir a movimentação 
+          <strong>{{ movimentacaoSelecionada?.nome }}</strong>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" 
+                  (click)="confirmarExclusao()" 
+                  data-bs-dismiss="modal">
+            Excluir
+          </button>
+        </div>
+      </div>
     </div>
 </div>
