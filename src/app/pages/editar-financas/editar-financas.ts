@@ -108,6 +108,9 @@ export class EditarFinancas {
       });
   }
   
+  confirmarAlteracao(){
+    this.onSubmit();  
+  }
   onSubmit() {
     const usuario = this.getSessionUser();
     const headers = { Authorization: `Bearer ${usuario.token}` };
@@ -130,9 +133,5 @@ export class EditarFinancas {
     const auth = sessionStorage.getItem('auth');
     const decrypted = CryptoJS.AES.decrypt(auth as string, 'auth').toString(CryptoJS.enc.Utf8);
     return JSON.parse(decrypted);
-  }
-
-  cancelar() {
-    this.router.navigate(['/consultar-financas']);
   }
 }

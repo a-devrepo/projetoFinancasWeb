@@ -12,7 +12,7 @@
         <strong>{{ mensagemErro() }}</strong>
       </div>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form">
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
           <input type="text" formControlName="nome" class="form-control" />
@@ -78,14 +78,38 @@
           </select>
         </div>
         <div class="mb-3 d-flex">
-            <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid">
+            <button 
+            class="btn btn-primary me-2" 
+            data-bs-toggle="modal"
+            data-bs-target="#confirmarAlteracaoModal" [disabled]="form.invalid">
               Atualizar Movimentação
-            </button>
-            <button type="button" class="btn btn-secondary" (click)="cancelar()">
-              Cancelar
             </button>
           </div>
       </form>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="confirmarAlteracaoModal" tabindex="-1" aria-labelledby="confirmarAlteracaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmarAlteracaoLabel">Confirmar Alteração</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja salvar as alterações em 
+          <strong>{{ movimentacao?.nome }}</strong>?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" 
+            (click)="confirmarAlteracao()" 
+            data-bs-dismiss="modal">
+              Salvar
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
