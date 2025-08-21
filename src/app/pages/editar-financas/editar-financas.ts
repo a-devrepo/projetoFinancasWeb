@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import {Component, inject, signal } from '@angular/core';
 import { Navbar } from '../../shared/navbar/navbar';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -23,20 +23,19 @@ export class EditarFinancas {
   http = inject(HttpClient);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  changeDetector = inject(ChangeDetectorRef)
 
-  idMovimentacao = ''
+  idMovimentacao = signal('');
 
   mensagemSucesso = signal('');
   mensagemErro = signal('');
 
-  categorias: any[] = [];
+  categorias = signal<any[]>([]);
 
   movimentacao: any = {
     id: '',
     nome: '',
     data: '',
-    valor: 0,
+    valor: 0.0,
     tipo: '',
     categoriaID:''
   };
@@ -57,7 +56,7 @@ export class EditarFinancas {
       this.mensagemErro.set('ID da movimentação não fornecido');
       return;  
     }
-    this.idMovimentacao = id; 
+    this.idMovimentacao.set(id); 
     this.carregarCategorias();
   }
 
@@ -65,29 +64,25 @@ export class EditarFinancas {
     const usuario = this.getSessionUser();
     const headers = { Authorization: `Bearer ${usuario.token}` }
 
-    return new Promise((resolve, reject) => {
+    
       this.http.get('http://localhost:8084/api/v1/categorias', { headers })
         .subscribe({
           next: (response) => {
-            this.categorias = response as any[];
-            this.changeDetector.detectChanges();
-
-            this.carregarMovimentacao(this.idMovimentacao);
+            this.categorias.set(response as any[]);
+            this.carregarMovimentacao();
           },
           error: (e) => {
             const mensagem = e.error?.message || 'Erro desconhecido do servidor';
             this.mensagemErro.set(`Erro ao carregar categorias: ${mensagem}`);
-            reject();
           }
         });
-    });
   }
 
-  carregarMovimentacao(id: string) {
+  carregarMovimentacao() {
     const usuario = this.getSessionUser();
     const headers = { Authorization: `Bearer ${usuario.token}` };
 
-    this.http.get(`http://localhost:8084/api/v1/movimentacoes/${id}`, { headers })
+    this.http.get(`http://localhost:8084/api/v1/movimentacoes/${this.idMovimentacao()}`, { headers })
       .subscribe({
         next: (response: any) => {
           this.movimentacao = response;
@@ -98,8 +93,6 @@ export class EditarFinancas {
             tipo: this.movimentacao.tipo,
             categoriaId: this.movimentacao.categoriaID
           });
-
-          this.changeDetector.detectChanges();
         },
         error: (e) => {
           const mensagem = e.error?.message || 'Erro desconhecido do servidor';
@@ -109,9 +102,9 @@ export class EditarFinancas {
   }
   
   confirmarAlteracao(){
-    this.onSubmit();  
+    this.atualizar();  
   }
-  onSubmit() {
+  atualizar() {
     const usuario = this.getSessionUser();
     const headers = { Authorization: `Bearer ${usuario.token}` };
 
