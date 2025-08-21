@@ -5,6 +5,7 @@ import { ConsultarFinancas } from './pages/consultar-financas/consultar-financas
 import { CadastrarCategorias } from './pages/cadastrar-categorias/cadastrar-categorias';
 import { CadastrarFinancas } from './pages/cadastrar-financas/cadastrar-financas';
 import { EditarFinancas } from './pages/editar-financas/editar-financas';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -14,18 +15,18 @@ export const routes: Routes = [
         path: 'criar-usuario', component: CriarUsuario
     },
     {
-        path: 'consultar-financas', component: ConsultarFinancas
+        path: 'consultar-financas', component: ConsultarFinancas, canActivate: [AuthGuard]
     },
     {
-        path: 'cadastrar-categorias', component: CadastrarCategorias
+        path: 'cadastrar-categorias', component: CadastrarCategorias, canActivate: [AuthGuard]
     },
     {
-        path: 'cadastrar-financas', component: CadastrarFinancas    
+        path: 'cadastrar-financas', component: CadastrarFinancas, canActivate: [AuthGuard]    
     },
     {
-        path: 'editar-financas/:id', component: EditarFinancas    
+        path: 'editar-financas/:id', component: EditarFinancas, canActivate: [AuthGuard]    
     },
     {
-        path: '', pathMatch: 'full', component: AutenticarUsuario
+        path: '', pathMatch: 'full', component: AutenticarUsuario, canActivate: [AuthGuard]
     }
 ];
