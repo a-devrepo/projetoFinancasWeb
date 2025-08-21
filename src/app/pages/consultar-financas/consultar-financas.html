@@ -35,9 +35,11 @@
                                         [routerLink]="['/editar-financas', movimentacao.id]">
                                             Editar
                                         </button>
-                                        <button class="btn btn-sm btn-outline-danger">
-                                            Excluir
-                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#confirmarExclusaoModal"
+                                        (click)="selecionarMovimentacao(movimentacao)">Excluir
+                                </button>
                                     </td>
                                 </tr>
                             }
@@ -47,3 +49,26 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" aria-labelledby="confirmarExclusaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja excluir a movimentação 
+          <strong>{{ movimentacaoSelecionada?.nome }}</strong>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" 
+                  (click)="confirmarExclusao()" 
+                  data-bs-dismiss="modal">
+            Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

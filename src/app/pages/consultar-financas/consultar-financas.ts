@@ -25,6 +25,7 @@ export class ConsultarFinancas {
   mensagemErro = signal('');
   
   movimentacoes: any[] = [];
+  movimentacaoSelecionada:any = null;
 
   ngOnInit(): void{
     const usuario = this.getSessionUser();
@@ -43,6 +44,33 @@ export class ConsultarFinancas {
           }
         });
   }
+
+selecionarMovimentacao(movimentacao: any) {
+  this.movimentacaoSelecionada = movimentacao;
+}
+
+confirmarExclusao() {
+  if (!this.movimentacaoSelecionada) return;
+
+  const usuario = this.getSessionUser();
+  const headers = { Authorization: `Bearer ${usuario.token}` };
+
+  this.http.delete(`http://localhost:8084/api/v1/movimentacoes/${this.movimentacaoSelecionada.id}`,{ headers })
+    .subscribe({
+      next: () => {
+        this.mensagemSucesso.set('Movimentação excluída com sucesso!');
+        this.movimentacoes = this.movimentacoes.filter(
+          m => m.id !== this.movimentacaoSelecionada!.id
+        );
+      this.movimentacaoSelecionada = null;
+      this.changeDetector.detectChanges();
+    },
+    error: (e) => {
+      const mensagem = e.error?.message || 'Erro desconhecido do servidor';
+      this.mensagemErro.set(`Erro ao excluir: ${mensagem}`);
+    }
+  });
+}
 
   private getSessionUser(): any {
     const auth = sessionStorage.getItem('auth');
