@@ -18,12 +18,11 @@ import { Navbar } from '../../shared/navbar/navbar';
 })
 export class CadastrarFinancas {
 
-  http = inject(HttpClient)
-  changeDetector = inject(ChangeDetectorRef)
+  http = inject(HttpClient);
   mensagemSucesso = signal('');
   mensagemErro = signal('');
-
-  categorias: any[] = [];
+  
+  categorias = signal<any[]>([]);
 
   form = new FormGroup(
     {
@@ -43,8 +42,7 @@ export class CadastrarFinancas {
       .subscribe(
         {
           next: (response) => {
-            this.categorias = response as any[];
-            this.changeDetector.detectChanges();
+            this.categorias.set(response as any[]);
           },
           error: (e) => {
             const mensagem = e.error?.message || 'Erro desconhecido do servidor';
