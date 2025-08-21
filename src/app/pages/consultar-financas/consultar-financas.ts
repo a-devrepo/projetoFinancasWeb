@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import {Component, inject, signal } from '@angular/core';
 import { Navbar } from '../../shared/navbar/navbar';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -19,12 +19,11 @@ import { RouterLink } from '@angular/router';
 export class ConsultarFinancas {
 
   http = inject(HttpClient)
-  changeDetector = inject(ChangeDetectorRef)
 
   mensagemSucesso = signal('');
   mensagemErro = signal('');
   
-  movimentacoes: any[] = [];
+  movimentacoes = signal<any[]>([]); 
   movimentacaoSelecionada:any = null;
 
   ngOnInit(): void{
@@ -35,8 +34,7 @@ export class ConsultarFinancas {
       .subscribe(
         {
           next: (response) => {
-            this.movimentacoes = response as any[];
-            this.changeDetector.detectChanges();
+            this.movimentacoes.set(response as any[]);
           },
           error: (e) => {
             const mensagem = e.error?.message || 'Erro desconhecido do servidor';
@@ -59,17 +57,32 @@ confirmarExclusao() {
     .subscribe({
       next: () => {
         this.mensagemSucesso.set('Movimentação excluída com sucesso!');
-        this.movimentacoes = this.movimentacoes.filter(
-          m => m.id !== this.movimentacaoSelecionada!.id
+        this.movimentacoes.update(lista =>
+          lista.filter(m => m.id !== this.movimentacaoSelecionada!.id)
         );
       this.movimentacaoSelecionada = null;
-      this.changeDetector.detectChanges();
     },
     error: (e) => {
       const mensagem = e.error?.message || 'Erro desconhecido do servidor';
       this.mensagemErro.set(`Erro ao excluir: ${mensagem}`);
     }
   });
+}
+
+totalEntradas(): number {
+  return this.movimentacoes()
+    .filter(m => m.tipo === 'ENTRADA')
+    .reduce((acc, m) => acc + m.valor, 0);
+}
+
+totalSaidas(): number {
+  return this.movimentacoes()
+    .filter(m => m.tipo === 'SAIDA')
+    .reduce((acc, m) => acc + m.valor, 0);
+}
+
+saldo(): number {
+  return this.totalEntradas() - this.totalSaidas();
 }
 
   private getSessionUser(): any {
